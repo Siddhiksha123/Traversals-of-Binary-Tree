@@ -1,0 +1,275 @@
+Iterative Inorder Traversal
+
+Inorder traversal follows:
+
+Left → Root → Right
+
+In iterative inorder traversal, we use a stack to simulate the recursive function call stack.
+
+Unlike preorder traversal, we do not process the node immediately.
+First, we keep moving toward the left subtree.
+
+Iterative Approach
+Create an empty result list to store traversal output.
+Create an empty stack using LinkedList<TreeNode>.
+Create a pointer called current and initialize it with the root node.
+Repeat the traversal while:
+current node is not null
+OR
+stack is not empty
+Move as far left as possible:
+Push the current node into the stack.
+Move to the left child.
+Continue until current becomes null.
+Once there is no more left subtree:
+Pop the top node from the stack.
+Process the node by adding its value to the result list.
+
+After processing the node:
+
+Move to its right subtree using:
+current = current.right;
+Repeat the same process until both:
+current becomes null
+stack becomes empty
+Return the final result list.
+Iterative Code
+import java.util.*;
+
+class Solution {
+
+    public List<Integer> inorderTraversal(TreeNode root) {
+
+        List<Integer> result = new ArrayList<>();
+
+        inorderHelper(root, result);
+
+        return result;
+    }
+
+    private void inorderHelper(TreeNode root, List<Integer> result) {
+
+        LinkedList<TreeNode> stack = new LinkedList<>();
+
+        TreeNode current = root;
+
+        while (current != null || !stack.isEmpty()) {
+
+            while (current != null) {
+
+                stack.push(current);
+
+                current = current.left;
+            }
+
+            current = stack.pop();
+
+            result.add(current.val);
+
+            current = current.right;
+        }
+    }
+}
+
+
+
+General Iteration Steps
+
+Always remember:
+
+GO LEFT
+PUSH NODE
+GO LEFT
+
+LEFT FINISHED?
+
+POP NODE
+PROCESS NODE
+MOVE RIGHT
+Important Intuition
+
+Inorder traversal wants:
+
+Left subtree first
+
+So iterative inorder always keeps moving left before processing any node.
+
+Only after the entire left subtree is completed do we process the root node.
+
+Then traversal continues toward the right subtree.
+
+Core Difference from Preorder
+Traversal	Processing Time
+Preorder	Process immediately
+Inorder	Process after left subtree
+
+
+
+Time complexity : 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+RECURSIVE APPROACH :
+
+Recursive Relation of Inorder Traversal
+
+Inorder traversal follows:
+
+Left → Root → Right
+
+This means:
+
+First traverse the entire left subtree.
+Then process the current root node.
+Then traverse the entire right subtree.
+Recursive Inorder Code
+import java.util.*;
+
+class Solution {
+
+    public List<Integer> inorderTraversal(TreeNode root) {
+
+        List<Integer> result = new ArrayList<>();
+
+        inorderHelper(root, result);
+
+        return result;
+    }
+
+    private void inorderHelper(TreeNode root, List<Integer> result) {
+
+        if (root == null) {
+            return;
+        }
+
+        inorderHelper(root.left, result);
+
+        result.add(root.val);
+
+        inorderHelper(root.right, result);
+    }
+}
+What Recursion is Internally Doing
+
+When recursion runs:
+
+inorderHelper(root.left, result);
+
+Java does NOT immediately forget the current node.
+
+Instead:
+
+The current function call gets stored in memory
+inside the system call stack.
+
+This allows Java to:
+
+Pause current node processing
+Go deeper into left subtree
+Return back later
+Continue remaining work
+IMPORTANT CONCEPT
+
+Recursion internally uses:
+
+Function Call Stack
+
+The iterative approach manually creates this same behavior using:
+
+LinkedList<TreeNode> stack
+Recursive Flow in Detail
+
+Suppose recursive code reaches this node:
+
+      4
+     / \
+    2   6
+
+and execution starts here:
+
+inorderHelper(4, result);
+STEP 1 — Traverse Left
+inorderHelper(4.left, result);
+
+Meaning:
+
+Pause node 4
+Go to node 2
+
+Now recursion again says:
+
+inorderHelper(2.left, result);
+
+Again:
+
+Pause node 2
+Go further left
+
+This continues until:
+
+left becomes null
+STEP 2 — Base Case Reached
+
+Eventually recursion reaches:
+
+if(root == null)
+{
+    return;
+}
+
+Meaning:
+
+No more left subtree exists.
+Start returning back.
+STEP 3 — Process Node
+
+After returning from left subtree:
+
+result.add(root.val);
+
+Now current node gets processed.
+
+This satisfies:
+
+Left → Root
+STEP 4 — Traverse Right
+
+After processing current node:
+
+inorderHelper(root.right, result);
+
+Now recursion explores the right subtree.
+
+This completes:
+
+Left → Root → Right
+HOW ITERATIVE VERSION SIMULATES THIS
+
+Recursive code automatically stores paused nodes in:
+
+System Call Stack
+
+Iterative inorder manually stores them using:
+
+stack.push(current);
+RECURSIVE vs ITERATIVE MAPPING
+Recursive Behavior	Iterative Equivalent
+Function call pauses current node	Push node into stack
+Go to left subtree	current = current.left
+Return from recursion	stack.pop()
+Process root	result.add(current.val)
+Go to right subtree	current = current.right
