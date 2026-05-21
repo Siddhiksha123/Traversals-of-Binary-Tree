@@ -1,0 +1,93 @@
+Approach
+Create an empty result list to store traversal output.
+If the root node is null, return the empty result immediately because there is no tree to traverse.
+Create a stack using LinkedList<TreeNode>.
+Push the root node into the stack.
+Repeat the traversal while the stack is not empty.
+In every iteration:
+Pop the top node from the stack.
+Process the node by adding its value to the result list.
+Check if the current node has a right child.
+If yes, push the right child into the stack.
+Check if the current node has a left child.
+If yes, push the left child into the stack.
+The right child is pushed before the left child because the stack processes elements in reverse order. This ensures that the left subtree gets processed before the right subtree, maintaining preorder order.
+Continue until the stack becomes empty.
+Return the final result list.
+Core Iteration Pattern
+
+Always remember:
+
+POP NODE
+PROCESS NODE
+PUSH RIGHT CHILD
+PUSH LEFT CHILD
+
+
+
+Important Intuition
+
+Since preorder wants:
+
+Root → Left → Right
+
+and stack reverses order, we push:
+
+Right first
+Left second
+
+so that the left child comes out first during the next iteration.
+
+Time Complexity
+O(N)
+
+because every node is visited once.
+
+Space Complexity
+O(N)
+
+in the worst case for a skewed tree.
+
+
+
+
+
+Iterative CODE: 
+
+class Solution {
+
+    public List<Integer> preorderTraversal(TreeNode root) {
+
+        List<Integer> result = new ArrayList<>();
+
+        preorderHelper(root, result);
+
+        return result;
+    }
+
+    private void preorderHelper(TreeNode root, List<Integer> result) {
+
+        if (root == null) {
+            return;
+        }
+
+        LinkedList<TreeNode> stack = new LinkedList<>();
+
+        stack.push(root);
+
+        while (!stack.isEmpty()) {
+
+            TreeNode current = stack.pop();
+
+            result.add(current.val);
+
+            if (current.right != null) {
+                stack.push(current.right);
+            }
+
+            if (current.left != null) {
+                stack.push(current.left);
+            }
+        }
+    }
+}
