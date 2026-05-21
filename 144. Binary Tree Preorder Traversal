@@ -91,3 +91,105 @@ class Solution {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+RECURSIVE APPROACH :
+
+
+Recursive Preorder Traversal
+
+Preorder traversal follows:
+
+Root → Left → Right
+
+In recursion, the system function call stack automatically handles traversal, so we do not need an explicit stack data structure.
+
+Recursive Approach
+If the current node is null, stop the recursion and return.
+Process the current node by adding its value to the result list.
+Recursively traverse the left subtree.
+Recursively traverse the right subtree.
+Continue until all nodes are visited.
+Recursive Code
+import java.util.*;
+
+class Solution {
+
+    public List<Integer> preorderTraversal(TreeNode root) {
+
+        List<Integer> result = new ArrayList<>();
+
+        preorderHelper(root, result);
+
+        return result;
+    }
+
+    private void preorderHelper(TreeNode root, List<Integer> result) {
+
+        if (root == null) {
+            return;
+        }
+
+        result.add(root.val);
+
+        preorderHelper(root.left, result);
+
+        preorderHelper(root.right, result);
+    }
+}
+Flow of Recursion
+
+For every node:
+
+1. Visit current node
+2. Traverse left subtree
+3. Traverse right subtree
+
+This exactly matches preorder traversal order:
+
+Root → Left → Right
+GENERAL RECURSIVE TEMPLATE
+BASE CASE:
+    if node is null → return
+
+WORK:
+    process current node
+
+RECURSIVE CALLS:
+    recurse left
+    recurse right
+IMPORTANT DIFFERENCE
+Recursive	Iterative
+Uses system call stack	Uses explicit stack
+Simpler code	More manual control
+Easier to understand	Better for stack-based understanding
+TIME COMPLEXITY
+O(N)
+
+because every node is visited once.
+
+SPACE COMPLEXITY
+O(H)
+
+where:
+
+H = height of tree
+
+because recursion stack stores function calls.
+
+Worst case:
+
+O(N)
+
+for skewed trees.
