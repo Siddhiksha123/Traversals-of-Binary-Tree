@@ -1,0 +1,111 @@
+Iska Main Concept
+
+Ye method tree ko Depth First (DFS style) me banata hai.
+
+Matlab:
+
+➡️ Pehle root
+➡️ Fir pura left subtree
+➡️ Fir pura right subtree
+
+Input ka format
+1 2 -1 -1 3 -1 -1
+
+-1 means NULL/no node.
+
+Kaise kaam karta hai
+Step-by-step
+
+Input = 1
+
+Tree:
+
+1
+
+Now function left child banane chala gaya.
+
+Input = 2
+
+    1
+   /
+  2
+
+Ab 2 ka left child.
+
+Input = -1
+
+Means no node.
+
+Ab 2 ka right child.
+
+Input = -1
+
+Means no node.
+
+So 2 complete.
+
+Ab recursion wapas 1 pe aayega.
+
+Now right child.
+
+Input = 3
+
+    1
+   / \
+  2   3
+Important Concept
+
+Ye method recursion stack use karta hai.
+
+Tree creation happens:
+
+Root → Left → Left → Left ...
+
+Then backtracking hoti hai.
+
+Isliye ise DFS-based creation bol sakte ho.
+
+
+import java.util.Scanner;
+
+class Node {
+    int data;
+    Node left, right;
+
+    Node(int value) {
+        data = value;
+        left = right = null;
+    }
+}
+
+public class Main {
+
+    static Scanner sc = new Scanner(System.in);
+
+    static Node BinaryTree() {
+
+        int x;
+        x = sc.nextInt();
+
+        if (x == -1)
+            return null;
+
+        Node temp = new Node(x);
+
+        temp.left = BinaryTree();
+
+        temp.right = BinaryTree();
+
+        return temp;
+    }
+
+    public static void main(String[] args) {
+
+        Node root = BinaryTree();
+
+        System.out.println("Binary Tree Created");
+    }
+}
+
+
+
