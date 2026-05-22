@@ -109,3 +109,60 @@ class Solution {
         return ans;
     }
 }
+
+
+
+
+
+
+
+
+Helper Function Approach -->
+import java.util.*;
+
+class TreeNode {
+    int val;
+    TreeNode left, right;
+
+    TreeNode(int val) {
+        this.val = val;
+    }
+}
+
+class Solution {
+
+    public List<Integer> levelOrder(TreeNode root) {
+
+        List<Integer> ans = new ArrayList<>();
+
+        if (root == null) return ans;
+
+        Queue<TreeNode> q = new LinkedList<>();
+
+        q.offer(root);
+
+        bfs(q, ans);
+
+        return ans;
+    }
+
+    private void bfs(Queue<TreeNode> q, List<Integer> ans) {
+
+        while (!q.isEmpty()) {
+
+            TreeNode temp = q.poll();
+
+            ans.add(temp.val);
+
+            // left child
+            if (temp.left != null) {
+                q.offer(temp.left);
+            }
+
+            // right child
+            if (temp.right != null) {
+                q.offer(temp.right);
+            }
+        }
+    }
+}
