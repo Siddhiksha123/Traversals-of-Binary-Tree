@@ -1,0 +1,111 @@
+Level Order Traversal (BFS)
+
+
+
+Visit nodes level by level from left to right.
+
+Level 0 → root
+Level 1 → children
+Level 2 → grandchildren
+✅ Data Structure Used
+QUEUE (FIFO)
+
+Because BFS works level-wise.
+
+✅ Core Steps
+1. Put root into queue
+2. Remove front node
+3. Add node value to answer
+4. Push left child
+5. Push right child
+6. Repeat until queue empty
+✅ Java Template
+Queue<TreeNode> q = new LinkedList<>();
+
+q.offer(root);
+
+while(!q.isEmpty()) {
+
+    TreeNode temp = q.poll();
+
+    // process node
+
+    if(temp.left != null)
+        q.offer(temp.left);
+
+    if(temp.right != null)
+        q.offer(temp.right);
+}
+🌳 Example
+        1
+      /   \
+     2     3
+    / \
+   4   5
+
+Traversal:
+
+1 → 2 → 3 → 4 → 5
+✅ Complexity
+Time
+O(n)
+
+Every node visited once.
+
+Space
+O(w)
+
+w = maximum width of tree
+
+Queue stores one level.
+
+
+
+
+
+
+
+
+import java.util.*;
+
+class TreeNode {
+    int val;
+    TreeNode left, right;
+
+    TreeNode(int val) {
+        this.val = val;
+    }
+}
+
+class Solution {
+
+    public List<Integer> levelOrder(TreeNode root) {
+
+        List<Integer> ans = new ArrayList<>();
+
+        if (root == null) return ans;
+
+        Queue<TreeNode> q = new LinkedList<>();
+
+        q.offer(root);
+
+        while (!q.isEmpty()) {
+
+            TreeNode temp = q.poll();
+
+            ans.add(temp.val);
+
+            // left side
+            if (temp.left != null) {
+                q.offer(temp.left);
+            }
+
+            // right side
+            if (temp.right != null) {
+                q.offer(temp.right);
+            }
+        }
+
+        return ans;
+    }
+}
