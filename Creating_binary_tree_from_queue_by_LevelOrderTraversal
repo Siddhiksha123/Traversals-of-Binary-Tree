@@ -1,0 +1,97 @@
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code online
+
+import java.util.*;
+
+class Node {
+
+    int data;
+    Node left;
+    Node right;
+
+    public Node(int data) {
+        this.data = data;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+public class Main {
+
+    // Function to create Binary Tree using Queue
+    public static Node createTree() {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter root value (-1 for null): ");
+
+        int rootVal = sc.nextInt();
+
+        // Empty tree case
+        if (rootVal == -1) {
+            return null;
+        }
+
+        Node root = new Node(rootVal);
+
+        Queue<Node> queue = new LinkedList<>();
+
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+
+            Node current = queue.poll();
+
+            // Left child
+            System.out.println("Enter left child of " + current.data + " (-1 for null): ");
+
+            int leftVal = sc.nextInt();
+
+            if (leftVal != -1) {
+
+                current.left = new Node(leftVal);
+
+                queue.add(current.left);
+            }
+
+            // Right child
+            System.out.print("Enter right child of " + current.data + " (-1 for null): ");
+
+            int rightVal = sc.nextInt();
+
+            if (rightVal != -1) {
+
+                current.right = new Node(rightVal);
+
+                queue.add(current.right);
+            }
+        }
+
+        return root;
+    }
+
+    // Simple inorder traversal to verify tree
+    public static void inorder(Node root) {
+
+        if (root == null) {
+            return;
+        }
+
+        inorder(root.left);
+        
+         System.out.print(root.data + " ");
+
+        inorder(root.right);
+        
+       
+    }
+
+    public static void main(String[] args) {
+
+        Node root = createTree();
+
+        System.out.println("Inorder Traversal:");
+
+        inorder(root);
+    }
+}
